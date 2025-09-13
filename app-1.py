@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import os
+import gdown
 
 # ===========================
 # Download and Load Model
@@ -11,10 +12,10 @@ MODEL_PATH = "trained_model.keras"
 FILE_ID = "1dQg1WgipCUuMDym1OKew0LQv9ADpQJz3"
 DOWNLOAD_URL = f"https://drive.google.com/uc?id={FILE_ID}"
 
-# Download model if it doesn't exist
+# Download model if not already present
 if not os.path.exists(MODEL_PATH):
-    st.info("Downloading model, please wait...")
-    os.system(f"wget -O {MODEL_PATH} {DOWNLOAD_URL}")
+    st.info("📥 Downloading model from Google Drive... please wait ⏳")
+    gdown.download(DOWNLOAD_URL, MODEL_PATH, quiet=False, fuzzy=True)
 
 # Load the model
 model = tf.keras.models.load_model(MODEL_PATH)
@@ -50,7 +51,7 @@ if app_mode == "Home":
     try:
         st.image("home_page.jpeg", use_column_width=True)
     except:
-        st.info("Upload `home_page.jpeg` in your folder to display a banner image.")
+        st.info("Upload `home_page.jpeg` in your repo to display a banner image.")
 
     st.markdown("""
     Welcome to the **Cattle Breed Recognition System**! 🐮🔍
